@@ -16,11 +16,11 @@ export default function Portfolio() {
       id: 1,
       title: 'Cozinha',
       category: 'Onde a casa realmente acontece.',
-      mainImage: '/public/images/cozinha/cozinha1.png',
+      mainImage: '/images/cozinha/cozinha1.png',
       album: [
-        '/public/images/cozinha/cozinha1.png',
-        '/public/images/cozinha/cozinha2.png',
-        '/public/images/cozinha/cozinha3.png'
+        '/images/cozinha/cozinha1.png',
+        '/images/cozinha/cozinha2.png',
+        '/images/cozinha/cozinha3.png'
       ],
       description: 'Cozinhas que unem convivência, praticidade e personalidade, desenhadas para acompanhar cada momento da casa.'
     },
@@ -28,7 +28,7 @@ export default function Portfolio() {
       id: 2,
       title: 'Quarto',
       category: 'Conforto que começa no ambiente.',
-      mainImage: '/public/images/quarto/quarto1.png',
+      mainImage: '/images/quarto/quarto1.png',
       album: [
         '',
         ''
@@ -39,7 +39,7 @@ export default function Portfolio() {
       id: 3,
       title: 'Banheiro',
       category: 'Funcionalidade com cara de spa.',
-      mainImage: '/public/images/banheiro/banheiro1.png',
+      mainImage: '/images/banheiro/banheiro1.png',
       album: [
         '',
         ''
@@ -50,7 +50,7 @@ export default function Portfolio() {
       id: 4,
       title: 'Sala',
       category: 'Design para receber e viver.',
-      mainImage: '/public/images/sala/sala1.png',
+      mainImage: '/images/sala/sala1.png',
       album: [
         '',
         ''
@@ -61,7 +61,7 @@ export default function Portfolio() {
       id: 5,
       title: 'Adega',
       category: 'Seu vinho, no cenário certo.',
-      mainImage: '/public/images/adega/adega1.png',
+      mainImage: '/images/adega/adega1.png',
       album: [
         ''
       ],
@@ -71,7 +71,7 @@ export default function Portfolio() {
       id: 6,
       title: 'Closet',
       category: 'Tudo no lugar, sem perder o estilo.',
-      mainImage: '/public/images/closet/closet1.png',
+      mainImage: '/images/closet/closet1.png',
       album: [
         ''
       ],
