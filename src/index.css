@@ -17,6 +17,6 @@ body {
 
 /* Custom selection color to match brand */
 ::selection {
-  @apply bg-red-700 text-white;
+  @apply bg-red-800 text-white;
 }
 

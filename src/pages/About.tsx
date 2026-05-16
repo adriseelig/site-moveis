@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Target, Eye, Heart } from 'lucide-react';
 
 /**
- * About section for EME Móveis.
+ * About section for eMe Móveis.
  * Covers history, mission, vision, and values.
  */
 export default function About() {
@@ -11,17 +11,17 @@ export default function About() {
     {
       title: 'Missão',
       desc: 'Proporcionar o bem-estar através de ambientes únicos e funcionais, superando as expectativas de nossos clientes.',
-      icon: <Target className="text-red-700" size={32} />
+      icon: <Target className="text-red-800" size={32} />
     },
     {
       title: 'Visão',
       desc: 'Ser referência nacional em inovação e design de móveis planejados, reconhecida pela excelência técnica.',
-      icon: <Eye className="text-red-700" size={32} />
+      icon: <Eye className="text-red-800" size={32} />
     },
     {
       title: 'Valores',
       desc: 'Ética, transparência, compromisso com a qualidade e paixão pela marcenaria artesanal com toque tecnológico.',
-      icon: <Heart className="text-red-700" size={32} />
+      icon: <Heart className="text-red-800" size={32} />
     }
   ];
 
@@ -36,20 +36,20 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-red-700 font-bold uppercase tracking-widest text-sm">Nossa História</span>
+            <span className="text-red-800 font-bold uppercase tracking-widest text-sm">Nossa História</span>
             <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-8 tracking-tight text-gray-900">
-              Mais de 15 anos transformando <br />
+              Mais de 4 anos transformando <br />
               <span className="text-gray-400">espaços em lares.</span>
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
               <p>
-                A <strong>EME Móveis</strong> nasceu do desejo de unir a tradição da marcenaria sob medida com as tendências mais modernas de design de interiores. Começamos como uma pequena oficina familiar e hoje somos uma indústria equipada com o que há de melhor em tecnologia.
+                A <strong>eMe Móveis</strong> nasceu do desejo de unir a tradição da marcenaria sob medida com as tendências mais modernas de design de interiores. Começamos como uma pequena oficina familiar e hoje somos uma empresa equipada com o que há de melhor em tecnologia.
               </p>
               <p>
                 Nossa trajetória é marcada pela dedicação a cada projeto. Acreditamos que o móvel planejado não é apenas uma peça de decoração, mas uma extensão da personalidade de quem habita o espaço. Por isso, cada corte, acabamento e acessório é escolhido para garantir durabilidade e sofisticação.
               </p>
               <p>
-                Ao escolher a EME Móveis, você não apenas adquire mobiliário, mas investe em qualidade de vida e na valorização do seu patrimônio com uma empresa que respira excelência.
+                Ao escolher a eMe Móveis, você não apenas adquire mobiliário, mas investe em qualidade de vida e na valorização do seu patrimônio com uma empresa que respira excelência.
               </p>
             </div>
           </motion.div>
@@ -70,14 +70,14 @@ export default function About() {
                 referrerPolicy="no-referrer"
               />
               {/* Floating Stat */}
-              <div className="absolute -bottom-6 -left-6 bg-red-700 text-white p-8 rounded-2xl shadow-xl hidden md:block">
-                <span className="text-4xl font-bold">1500+</span>
+              <div className="absolute -bottom-6 -left-6 bg-red-800 text-white p-8 rounded-2xl shadow-xl hidden md:block">
+                <span className="text-4xl font-bold">100+</span>
                 <p className="text-sm uppercase tracking-wide opacity-80 mt-1">Projetos Entregues</p>
               </div>
             </motion.div>
             
             {/* Background Accent */}
-            <div className="absolute top-20 -right-10 w-64 h-64 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
+            <div className="absolute top-20 -right-10 w-64 h-64 bg-red-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
           </div>
         </div>
 

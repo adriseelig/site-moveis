@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div>
             <h3 className="text-2xl font-bold mb-4 tracking-tighter">
-              EME <span className="text-red-700">MÓVEIS</span>
+              eMe <span className="text-red-800">MÓVEIS</span>
             </h3>
             <p className="text-gray-400 leading-relaxed max-w-sm">
               Transformando seus sonhos em realidade com móveis planejados de alta qualidade e design exclusivo para cada ambiente.
@@ -24,10 +24,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-6">Navegação</h4>
             <ul className="space-y-4">
-              <li><a href="#home" className="text-gray-400 hover:text-red-600 transition-colors">Início</a></li>
-              <li><a href="#sobre" className="text-gray-400 hover:text-red-600 transition-colors">Sobre Nós</a></li>
-              <li><a href="#portfolio" className="text-gray-400 hover:text-red-600 transition-colors">Portfólio</a></li>
-              <li><a href="#contato" className="text-gray-400 hover:text-red-600 transition-colors">Contato</a></li>
+              <li><a href="#home" className="text-gray-400 hover:text-red-800 transition-colors">Início</a></li>
+              <li><a href="#sobre" className="text-gray-400 hover:text-red-800 transition-colors">Sobre Nós</a></li>
+              <li><a href="#portfolio" className="text-gray-400 hover:text-red-800 transition-colors">Portfólio</a></li>
+              <li><a href="#contato" className="text-gray-400 hover:text-red-800 transition-colors">Contato</a></li>
             </ul>
           </div>
 
@@ -36,20 +36,20 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Contato</h4>
             <ul className="space-y-4 text-gray-400">
               <li className="flex items-center gap-3">
-                <Phone size={18} className="text-red-700" />
-                <span>(11) 99999-9999</span>
+                <Phone size={18} className="text-red-800" />
+                <span>(55) 99717-5619</span>
               </li>
               <li className="flex items-center gap-3">
-                <Instagram size={18} className="text-red-700" />
+                <Instagram size={18} className="text-red-800" />
                 <span>@ememoveis</span>
               </li>
               <li className="flex items-center gap-3">
-                <Mail size={18} className="text-red-700" />
-                <span>contato@ememoveis.com.br</span>
+                <Mail size={18} className="text-red-800" />
+                <span>atendimento@ememoveis.com.br</span>
               </li>
               <li className="flex items-center gap-3">
-                <MapPin size={18} className="text-red-700" />
-                <span>São Paulo, SP</span>
+                <MapPin size={18} className="text-red-800" />
+                <span>Frederico Westphalen, RS</span>
               </li>
             </ul>
           </div>

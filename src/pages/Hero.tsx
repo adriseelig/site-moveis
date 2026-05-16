@@ -28,7 +28,7 @@ export default function Hero() {
           className="max-w-2xl"
         >
           <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6 tracking-tighter">
-            Elegância em cada <span className="text-red-700 italic">detalhe.</span>
+            Elegância em cada <span className="text-red-800 italic">detalhe.</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-10 font-light">
             Móveis planejados que unem sofisticação, funcionalidade e o estilo que sua casa merece.
@@ -36,7 +36,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4">
             <a
               href="#contato"
-              className="bg-red-700 hover:bg-red-800 text-white px-8 py-4 rounded-full text-lg font-bold text-center transition-all shadow-xl hover:shadow-red-900/40"
+              className="bg-red-800 hover:bg-red-900 text-white px-8 py-4 rounded-full text-lg font-bold text-center transition-all shadow-xl hover:shadow-red-900/40"
             >
               Solicitar Orçamento
             </a>
@@ -52,7 +52,7 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div className="w-1 h-12 rounded-full bg-gradient-to-b from-red-700 to-transparent"></div>
+        <div className="w-1 h-12 rounded-full bg-gradient-to-b from-red-800 to-transparent"></div>
       </div>
     </section>
   );

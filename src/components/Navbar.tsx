@@ -36,7 +36,7 @@ export default function Navbar() {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <span className="text-2xl font-bold tracking-tighter text-white">
-              EME <span className="text-red-700">MÓVEIS</span>
+              eMe <span className="text-red-800">MÓVEIS</span>
             </span>
           </div>
 
@@ -47,14 +47,14 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-gray-300 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-300 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   {link.name}
                 </a>
               ))}
               <a
                 href="#contato"
-                className="bg-red-700 hover:bg-red-800 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-md transform hover:scale-105"
+                className="bg-red-800 hover:bg-red-900 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-md transform hover:scale-105"
               >
                 Orçamento
               </a>
@@ -82,7 +82,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="text-gray-300 hover:text-red-600 block px-3 py-4 text-base font-medium border-b border-gray-900"
+                className="text-gray-300 hover:text-red-700 block px-3 py-4 text-base font-medium border-b border-gray-900"
               >
                 {link.name}
               </a>
