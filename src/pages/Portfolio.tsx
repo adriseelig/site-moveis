@@ -19,8 +19,23 @@ export default function Portfolio() {
       mainImage: '/images/cozinha/cozinha1.png',
       album: [
         '/images/cozinha/cozinha1.png',
-        '/images/cozinha/cozinha2.png',
-        '/images/cozinha/cozinha3.png'
+        '/images/cozinha/cozinha3.png',
+        '/images/cozinha/cozinha4.png',
+        '/images/cozinha/cozinha5.png',
+        '/images/cozinha/cozinha6.png',
+        '/images/cozinha/cozinha7.png',
+        '/images/cozinha/cozinha8.png',
+        '/images/cozinha/cozinha9.png',
+        '/images/cozinha/cozinha10.png',
+        '/images/cozinha/cozinha11.png',
+        '/images/cozinha/cozinha12.png',
+        '/images/cozinha/cozinha13.png',
+        '/images/cozinha/cozinha14.png',
+        '/images/cozinha/cozinha15.png',
+        '/images/cozinha/cozinha16.png',
+        '/images/cozinha/cozinha17.png',
+        '/images/cozinha/cozinha18.png',
+        '/images/cozinha/cozinha19.png'
       ],
       description: 'Cozinhas que unem convivência, praticidade e personalidade, desenhadas para acompanhar cada momento da casa.'
     },
@@ -30,8 +45,10 @@ export default function Portfolio() {
       category: 'Conforto que começa no ambiente.',
       mainImage: '/images/quarto/quarto1.png',
       album: [
-        '',
-        ''
+        '/images/quarto/quarto2.png',
+        '/images/quarto/quarto3.png',
+        '/images/quarto/quarto4.png',
+        '/images/quarto/quarto5.png'
       ],
       description: 'Espaços criados para desacelerar, descansar e refletir a personalidade de quem vive ali.'
     },
@@ -41,8 +58,10 @@ export default function Portfolio() {
       category: 'Funcionalidade com cara de spa.',
       mainImage: '/images/banheiro/banheiro1.png',
       album: [
-        '',
-        ''
+        '/images/banheiro/banheiro1.png',
+        '/images/banheiro/banheiro2.png',
+        '/images/banheiro/banheiro3.png',
+        '/images/banheiro/banheiro4.png'
       ],
       description: 'Projetos que equilibram conforto, organização e estética para criar um espaço leve, elegante e prático no dia a dia.'
     },
@@ -52,8 +71,11 @@ export default function Portfolio() {
       category: 'Design para receber e viver.',
       mainImage: '/images/sala/sala1.png',
       album: [
-        '',
-        ''
+        '/images/sala/sala1.png',
+        '/images/sala/sala2.png',
+        '/images/sala/sala3.png',
+        '/images/sala/sala4.png',
+        '/images/sala/sala5.png'
       ],
       description: 'Ambientes que conectam elegância e aconchego, feitos para transformar encontros em experiências memoráveis.'
     },
@@ -63,7 +85,10 @@ export default function Portfolio() {
       category: 'Seu vinho, no cenário certo.',
       mainImage: '/images/adega/adega1.png',
       album: [
-        ''
+        '/images/adega/adega1.png',
+        '/images/adega/adega2.png',
+        '/images/adega/adega3.png',
+        '/images/adega/adega4.png'
       ],
       description: 'Ambientes pensados para transformar rótulos em experiência, unindo sofisticação, iluminação e design sob medida.'
     },
@@ -73,7 +98,8 @@ export default function Portfolio() {
       category: 'Tudo no lugar, sem perder o estilo.',
       mainImage: '/images/closet/closet1.png',
       album: [
-        ''
+        '/images/closet/closet1.png',
+        '/images/closet/closet2.png'
       ],
       description: 'Closets planejados para valorizar cada detalhe da rotina, com soluções inteligentes e acabamento que impressiona.'
     }

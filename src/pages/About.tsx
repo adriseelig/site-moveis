@@ -64,8 +64,8 @@ export default function About() {
               className="relative z-10"
             >
               <img
-                src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&q=80&w=800"
-                alt="Detalhe de marcenaria EME"
+                src="/images/sobre-nos.png"
+                alt="Detalhe de marcenaria eMe"
                 className="rounded-3xl shadow-2xl w-full h-[500px] object-cover"
                 referrerPolicy="no-referrer"
               />
