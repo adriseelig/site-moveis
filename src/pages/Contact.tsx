@@ -20,7 +20,7 @@ export default function Contact() {
     const message = formData.get('message') as string;
 
     // Número da eMe Móveis (substitua pelo seu número real)
-    const whatsappNumber = "5597175616";
+    const whatsappNumber = "55997175616";
     
     // Formata a mensagem para o WhatsApp
     const text = `Olá! Meu nome é ${name}.
@@ -86,7 +86,9 @@ Gostaria de um orçamento para móveis planejados.
               </a>
 
               <a 
-                href="#" 
+                href="https://www.instagram.com/ememoveis" 
+                target="_blank" 
+                rel="noreferrer"
                 className="flex items-center gap-5 p-6 bg-gray-50 rounded-2xl border border-transparent hover:border-red-800/30 hover:bg-white hover:shadow-lg transition-all group"
               >
                 <div className="w-12 h-12 bg-red-800 rounded-full flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform">

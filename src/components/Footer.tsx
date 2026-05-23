@@ -37,11 +37,18 @@ export default function Footer() {
             <ul className="space-y-4 text-gray-400">
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-red-800" />
-                <span>(55) 99717-5616</span>
+                <span>(55) 99717-5619</span>
               </li>
               <li className="flex items-center gap-3">
                 <Instagram size={18} className="text-red-800" />
-                <span>@ememoveis</span>
+                <a 
+                  href="https://www.instagram.com/ememoveis" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="hover:text-red-800 transition-colors"
+                >
+                  @ememoveis
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-red-800" />
