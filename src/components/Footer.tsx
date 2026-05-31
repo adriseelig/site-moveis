@@ -63,8 +63,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-900 text-center text-gray-500 text-sm">
+        <div className="pt-8 border-t border-gray-900 flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
           <p>© {new Date().getFullYear()} EME Móveis Planejados. Todos os direitos reservados.</p>
+          <a 
+            href="/admin" 
+            className="text-xs text-gray-600 hover:text-red-700 transition-colors hover:underline"
+          >
+            Área Restrita (Painel Administrativo)
+          </a>
         </div>
       </div>
     </footer>

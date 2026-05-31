@@ -1,6 +1,6 @@
 {
   "name": "eMe Móveis",
-  "description": "Site institucional moderno para eMe Móveis, especializada em móveis planejados de alta qualidade.",
+  "description": "Site moderno para eMe Móveis, especializada em móveis de alta qualidade.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

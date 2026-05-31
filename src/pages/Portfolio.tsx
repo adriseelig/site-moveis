@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
@@ -9,101 +9,99 @@ import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [projectsList, setProjectsList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Updated projects list with "album" support
-  const projects = [
+  // Static list of projects to use as robust fallback with exactly the 6 defined categories
+  const fallbackProjects = [
     {
       id: 1,
-      title: 'Cozinha',
-      category: 'Onde a casa realmente acontece.',
-      mainImage: '/images/cozinha/cozinha1.png',
+      title: 'Cozinha Gourmet Anthracite',
+      category: 'Cozinha',
+      mainImage: 'https://images.unsplash.com/photo-1556911223-e1534ecdb531?auto=format&fit=crop&q=80&w=1200',
       album: [
-        '/images/cozinha/cozinha1.png',
-        '/images/cozinha/cozinha3.png',
-        '/images/cozinha/cozinha4.png',
-        '/images/cozinha/cozinha5.png',
-        '/images/cozinha/cozinha6.png',
-        '/images/cozinha/cozinha7.png',
-        '/images/cozinha/cozinha8.png',
-        '/images/cozinha/cozinha9.png',
-        '/images/cozinha/cozinha10.png',
-        '/images/cozinha/cozinha11.png',
-        '/images/cozinha/cozinha12.png',
-        '/images/cozinha/cozinha13.png',
-        '/images/cozinha/cozinha14.png',
-        '/images/cozinha/cozinha15.png',
-        '/images/cozinha/cozinha16.png',
-        '/images/cozinha/cozinha17.png',
-        '/images/cozinha/cozinha18.png',
-        '/images/cozinha/cozinha19.png'
+        'https://images.unsplash.com/photo-1556911223-e1534ecdb531?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=1200'
       ],
-      description: 'Cozinhas que unem convivência, praticidade e personalidade, desenhadas para acompanhar cada momento da casa.'
+      description: 'Cozinha com acabamento em tons escuros, ilha central e ferragens alemãs de alta performance.'
     },
     {
       id: 2,
-      title: 'Quarto',
-      category: 'Conforto que começa no ambiente.',
-      mainImage: '/images/quarto/quarto1.png',
+      title: 'Suíte Master Walk-in',
+      category: 'Closet',
+      mainImage: 'https://images.unsplash.com/photo-1595428774751-267868770857?auto=format&fit=crop&q=80&w=1200',
       album: [
-        '/images/quarto/quarto2.png',
-        '/images/quarto/quarto3.png',
-        '/images/quarto/quarto4.png',
-        '/images/quarto/quarto5.png'
+        'https://images.unsplash.com/photo-1595428774751-267868770857?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1592075103427-4c4f346048d0?auto=format&fit=crop&q=80&w=1200'
       ],
-      description: 'Espaços criados para desacelerar, descansar e refletir a personalidade de quem vive ali.'
+      description: 'Closet planejado com divisões inteligentes, iluminação em LED embutida e nichos para calçados.'
     },
     {
       id: 3,
-      title: 'Banheiro',
-      category: 'Funcionalidade com cara de spa.',
-      mainImage: '/images/banheiro/banheiro1.png',
+      title: 'Home Office Executivo',
+      category: 'Quarto',
+      mainImage: 'https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?auto=format&fit=crop&q=80&w=1200',
       album: [
-        '/images/banheiro/banheiro1.png',
-        '/images/banheiro/banheiro2.png',
-        '/images/banheiro/banheiro3.png',
-        '/images/banheiro/banheiro4.png'
+        'https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200'
       ],
-      description: 'Projetos que equilibram conforto, organização e estética para criar um espaço leve, elegante e prático no dia a dia.'
+      description: 'Ambiente focado em produtividade com mesa em L, painéis ripados e armários para organização.'
     },
     {
       id: 4,
-      title: 'Sala',
-      category: 'Design para receber e viver.',
-      mainImage: '/images/sala/sala1.png',
+      title: 'Living Integrado',
+      category: 'Sala',
+      mainImage: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200',
       album: [
-        '/images/sala/sala1.png',
-        '/images/sala/sala2.png',
-        '/images/sala/sala3.png',
-        '/images/sala/sala4.png',
-        '/images/sala/sala5.png'
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200'
       ],
-      description: 'Ambientes que conectam elegância e aconchego, feitos para transformar encontros em experiências memoráveis.'
+      description: 'Painel de TV com fundo em pedra e móveis suspensos em laca branca fosca.'
     },
     {
       id: 5,
-      title: 'Adega',
-      category: 'Seu vinho, no cenário certo.',
-      mainImage: '/images/adega/adega1.png',
+      title: 'Adega Gourmet Climatizada',
+      category: 'Adega',
+      mainImage: 'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&q=80&w=1200',
       album: [
-        '/images/adega/adega1.png',
-        '/images/adega/adega2.png',
-        '/images/adega/adega3.png',
-        '/images/adega/adega4.png'
+        'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&q=80&w=1200'
       ],
-      description: 'Ambientes pensados para transformar rótulos em experiência, unindo sofisticação, iluminação e design sob medida.'
+      description: 'Churrasqueira integrada com marcenaria naval e linda adega para vinhos selecionados.'
     },
     {
       id: 6,
-      title: 'Closet',
-      category: 'Tudo no lugar, sem perder o estilo.',
-      mainImage: '/images/closet/closet1.png',
+      title: 'Banheiro Spa',
+      category: 'Banheiro',
+      mainImage: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=1200',
       album: [
-        '/images/closet/closet1.png',
-        '/images/closet/closet2.png'
+        'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=1200'
       ],
-      description: 'Closets planejados para valorizar cada detalhe da rotina, com soluções inteligentes e acabamento que impressiona.'
+      description: 'Gabinete suspenso com gavetões e espelheira com moldura em metal.'
     }
   ];
+
+  useEffect(() => {
+    fetch('/api/projects')
+      .then((res) => {
+        if (!res.ok) throw new Error('Falha ao obter lista de projetos');
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProjectsList(data);
+        } else {
+          setProjectsList(fallbackProjects);
+        }
+      })
+      .catch((err) => {
+        console.warn('Erro ao carregar projetos, usando fallback do sistema:', err);
+        setProjectsList(fallbackProjects);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   const openModal = (project: any) => {
     setSelectedProject(project);
@@ -144,56 +142,66 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              onClick={() => openModal(project)}
-              className="group relative overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer"
-            >
-              {/* Image Container */}
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={project.mainImage}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
+        {/* Loading Indicator */}
+        {loading ? (
+          <div className="flex justify-center items-center py-24">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-800"></div>
+          </div>
+        ) : projectsList.length === 0 ? (
+          <div className="text-center py-24 text-gray-400">
+            <p className="text-sm font-medium">Nenhum projeto encontrado.</p>
+          </div>
+        ) : (
+          /* Grid Layout */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projectsList.map((project, index) => {
+              const photoCount = project.album ? project.album.length : 1;
+              return (
+                <motion.div
+                  key={project.id || index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  onClick={() => openModal(project)}
+                  className="group relative overflow-hidden rounded-3xl bg-neutral-950 shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer aspect-[4/3] w-full"
+                >
+                  {/* Image Container */}
+                  <div className="w-full h-full overflow-hidden absolute inset-0">
+                    <img
+                      src={project.mainImage}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
 
-              {/* Overlay Content */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <div className="flex justify-between items-end">
-                  <div>
-                    <span className="text-red-600 text-xs font-bold uppercase tracking-widest mb-1">
-                      {project.category}
-                    </span>
-                    <h3 className="text-white text-xl font-bold">{project.title}</h3>
+                  {/* Premium Black Bottom-Focused Gradient Overlay on Hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 z-20">
+                    <div className="flex justify-between items-end gap-4 w-full transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                      {/* Left Side: Environment/Project Title (Top, tiny) & Category (Bottom, smaller than original title font) */}
+                      <div className="min-w-0 flex-1">
+                        <span className="text-red-500 text-[9px] sm:text-[10px] font-extrabold tracking-widest block mb-1 uppercase truncate">
+                          {project.title}
+                        </span>
+                        <h3 className="text-white text-base sm:text-lg md:text-xl font-extrabold tracking-tight truncate leading-tight">
+                          {project.category}
+                        </h3>
+                      </div>
+
+                      {/* Right Side: Circular expand button */}
+                      <div className="shrink-0">
+                        <div className="w-10 h-10 bg-neutral-950/60 border border-white/10 hover:border-red-800 text-white rounded-full flex items-center justify-center transition-all duration-300 ease-out group-hover:bg-red-800 group-hover:scale-105 shadow-md">
+                          <Maximize2 size={16} className="text-white" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="bg-white/20 p-2 rounded-full backdrop-blur-sm text-white">
-                    <Maximize2 size={18} />
-                  </div>
-                </div>
-              </div>
-              
-              {/* Mobile Content Display */}
-              <div className="p-4 md:hidden flex justify-between items-center">
-                <div>
-                  <span className="text-red-800 text-[10px] font-bold uppercase tracking-widest">
-                    {project.category}
-                  </span>
-                  <h3 className="text-gray-900 font-bold">{project.title}</h3>
-                </div>
-                <span className="text-gray-400 text-xs">{project.album.length} fotos</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Lightbox Modal */}
