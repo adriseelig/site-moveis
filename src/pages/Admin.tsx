@@ -29,8 +29,14 @@ export default function Admin() {
   const [loginError, setLoginError] = useState('');
   const [loadingLogin, setLoadingLogin] = useState(false);
 
-  // Active partition state: 'projects' | 'timeline' | 'settings'
-  const [activeTab, setActiveTab] = useState<'projects' | 'timeline' | 'settings'>('projects');
+  // Active partition state: 'projects' | 'timeline' | 'settings' | 'account'
+  const [activeTab, setActiveTab] = useState<'projects' | 'timeline' | 'settings' | 'account'>('projects');
+
+  // Account Change State
+  const [newUsername, setNewUsername] = useState(localStorage.getItem('eme_admin_username') || 'admin');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [savingAccount, setSavingAccount] = useState(false);
 
   // Site settings state
   const [settingsForm, setSettingsForm] = useState({
@@ -181,6 +187,7 @@ export default function Admin() {
         localStorage.setItem('eme_admin_token', data.token);
         localStorage.setItem('eme_admin_username', data.user.username);
         setToken(data.token);
+        setNewUsername(data.user.username);
         showToast('Login realizado com sucesso', 'success');
       } else {
         setLoginError(data.error || 'Credenciais inválidas');
@@ -197,6 +204,41 @@ export default function Admin() {
     localStorage.removeItem('eme_admin_username');
     setToken(null);
     showToast('Sessão finalizada', 'success');
+  };
+
+  const saveAccountCredentials = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword && newPassword !== confirmPassword) {
+      showToast('As senhas digitadas não batem!', 'error');
+      return;
+    }
+    setSavingAccount(true);
+    try {
+      const res = await fetch('/api/auth/update-credentials', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: newUsername,
+          password: newPassword || undefined
+        })
+      });
+      if (res.ok) {
+        localStorage.setItem('eme_admin_username', newUsername);
+        showToast('Credenciais atualizadas com sucesso!');
+        setNewPassword('');
+        setConfirmPassword('');
+      } else {
+        const err = await res.json();
+        showToast(err.error || 'Erro ao salvar credenciais', 'error');
+      }
+    } catch (e) {
+      showToast('Erro de conexão ao salvar', 'error');
+    } finally {
+      setSavingAccount(false);
+    }
   };
 
   // Master upload file helper
@@ -565,6 +607,15 @@ export default function Admin() {
               >
                 <ImageIcon size={16} />
                 <span>Banners & Capas</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('account')}
+                className={`px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all ${
+                  activeTab === 'account' ? 'bg-red-800 text-white shadow-md' : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <User size={16} />
+                <span>Acesso & Senha</span>
               </button>
             </nav>
           </div>
@@ -1206,6 +1257,81 @@ export default function Admin() {
                 </div>
               </form>
             )}
+          </div>
+        )}
+
+        {/* SECTION D: ACCOUNT MANAGEMENT */}
+        {activeTab === 'account' && (
+          <div className="max-w-md mx-auto bg-[#0a0a0a] border border-gray-900 p-8 md:p-10 rounded-2xl shadow-xl">
+            <h2 className="text-xl font-extrabold mb-2 flex items-center gap-2 text-white/90">
+              <Lock className="text-red-800" size={22} />
+              <span>Gerenciar Usuário & Senha</span>
+            </h2>
+            <p className="text-xs text-gray-400 mb-6 leading-relaxed">
+              Mude as credenciais do usuário administrador diretamente pela interface. Deixe o campo de senha vazio caso queira manter a senha atual e alterar apenas o nome do usuário.
+            </p>
+
+            <form onSubmit={saveAccountCredentials} className="space-y-6">
+              <div>
+                <label className="block text-xs uppercase font-extrabold tracking-wide text-gray-400 mb-2">Nome do Usuário</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
+                    <User size={16} />
+                  </span>
+                  <input 
+                    type="text"
+                    value={newUsername}
+                    onChange={(e) => setNewUsername(e.target.value)}
+                    className="w-full bg-[#121212] border border-gray-800 focus:border-red-800 rounded-xl pl-11 pr-4 py-3.5 text-white focus:outline-none focus:ring-1 focus:ring-red-800 transition-all text-sm"
+                    placeholder="Ex: admin"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase font-extrabold tracking-wide text-gray-400 mb-2">Nova Senha (Opcional)</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
+                    <Lock size={16} />
+                  </span>
+                  <input 
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full bg-[#121212] border border-gray-800 focus:border-red-800 rounded-xl pl-11 pr-4 py-3.5 text-white focus:outline-none focus:ring-1 focus:ring-red-800 transition-all text-sm font-sans"
+                    placeholder="Deixe em branco para não alterar"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase font-extrabold tracking-wide text-gray-400 mb-2">Confirmar Nova Senha</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
+                    <Lock size={16} />
+                  </span>
+                  <input 
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full bg-[#121212] border border-gray-800 focus:border-red-800 rounded-xl pl-11 pr-4 py-3.5 text-white focus:outline-none focus:ring-1 focus:ring-red-800 transition-all text-sm font-sans"
+                    placeholder="Confirme a nova senha"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-900 flex justify-end">
+                <button 
+                  type="submit" 
+                  disabled={savingAccount}
+                  className="w-full bg-red-800 hover:bg-red-900 disabled:opacity-50 text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-lg flex justify-center items-center gap-2"
+                >
+                  {savingAccount && <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>}
+                  <span>{savingAccount ? 'Salvando...' : 'Salvar Novas Credenciais'}</span>
+                </button>
+              </div>
+            </form>
           </div>
         )}
       </main>
