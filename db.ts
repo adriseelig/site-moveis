@@ -21,9 +21,17 @@ interface FallbackSchema {
   users: any[];
   projects: any[];
   timeline: any[];
+  settings?: {
+    heroImage: string;
+    aboutImage: string;
+  };
 }
 
 const defaultData: FallbackSchema = {
+  settings: {
+    heroImage: '/images/banner-principal.jpg',
+    aboutImage: '/images/sobre-nos.jpg'
+  },
   users: [
     {
       id: 1,
@@ -36,8 +44,11 @@ const defaultData: FallbackSchema = {
       id: 1,
       title: 'Cozinha Gourmet Anthracite',
       category: 'Cozinha',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1556911223-e1534ecdb531?auto=format&fit=crop&q=80&w=1200',
       album: [
+        'https://images.unsplash.com/photo-1556911223-e1534ecdb531?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=1200'
       ],
       description: 'Cozinha com acabamento em tons escuros, ilha central e ferragens alemãs de alta performance.'
     },
@@ -45,26 +56,32 @@ const defaultData: FallbackSchema = {
       id: 2,
       title: 'Suíte Master Walk-in',
       category: 'Closet',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1595428774751-267868770857?auto=format&fit=crop&q=80&w=1200',
       album: [
-        ],
+        'https://images.unsplash.com/photo-1595428774751-267868770857?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1592075103427-4c4f346048d0?auto=format&fit=crop&q=80&w=1200'
+      ],
       description: 'Closet planejado com divisões inteligentes, iluminação em LED embutida e nichos para calçados.'
     },
     {
       id: 3,
       title: 'Home Office Executivo',
       category: 'Quarto',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?auto=format&fit=crop&q=80&w=1200',
       album: [
-          ],
+        'https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200'
+      ],
       description: 'Ambiente focado em produtividade com mesa em L, painéis ripados e armários para organização.'
     },
     {
       id: 4,
       title: 'Living Integrado',
       category: 'Sala',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200',
       album: [
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200',
+        'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200'
       ],
       description: 'Painel de TV com fundo em pedra e móveis suspensos em laca branca fosca.'
     },
@@ -72,8 +89,9 @@ const defaultData: FallbackSchema = {
       id: 5,
       title: 'Adega Gourmet Climatizada',
       category: 'Adega',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&q=80&w=1200',
       album: [
+        'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&q=80&w=1200'
       ],
       description: 'Churrasqueira integrada com marcenaria naval e linda adega para vinhos selecionados.'
     },
@@ -81,8 +99,9 @@ const defaultData: FallbackSchema = {
       id: 6,
       title: 'Banheiro Spa',
       category: 'Banheiro',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=1200',
       album: [
+        'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=1200'
       ],
       description: 'Gabinete suspenso com gavetões e espelheira com moldura em metal.'
     }
@@ -193,6 +212,14 @@ export async function initDatabase() {
           );
         `);
 
+        await client.query(`
+          CREATE TABLE IF NOT EXISTS settings (
+            id SERIAL PRIMARY KEY,
+            hero_image TEXT NOT NULL,
+            about_image TEXT NOT NULL
+          );
+        `);
+
         // Check if admin user exists, insert if not
         const userRes = await client.query('SELECT * FROM users WHERE username = $1', ['admin']);
         if (userRes.rows.length === 0) {
@@ -223,6 +250,16 @@ export async function initDatabase() {
             );
           }
           console.log('Initial timeline seeded to PostgreSQL.');
+        }
+
+        // Check if settings table is empty, insert initial row
+        const settingsRes = await client.query('SELECT * FROM settings LIMIT 1');
+        if (settingsRes.rows.length === 0) {
+          await client.query(
+            'INSERT INTO settings (id, hero_image, about_image) VALUES (1, $1, $2)',
+            ['/images/banner-principal.jpg', '/images/sobre-nos.jpg']
+          );
+          console.log('Initial settings seeded to PostgreSQL.');
         }
 
         console.log('PostgreSQL configuration completed successfully.');
@@ -446,5 +483,72 @@ export const db = {
       return { id: found.id, username: found.username };
     }
     return null;
+  },
+
+  updateAdminUser: async (username: string, newPassword?: string): Promise<boolean> => {
+    if (usePostgres && pool) {
+      try {
+        const res = await pool.query(
+          newPassword
+            ? 'UPDATE users SET username = $1, password = $2 WHERE id = 1'
+            : 'UPDATE users SET username = $1 WHERE id = 1',
+          newPassword ? [username, hashPassword(newPassword)] : [username]
+        );
+        return (res.rowCount ?? 0) > 0;
+      } catch (err) {
+        console.error('PG updateAdminUser error:', err);
+      }
+    }
+    const data = readFallback();
+    const admin = data.users.find(u => u.id === 1) || data.users[0];
+    if (admin) {
+      admin.username = username;
+      if (newPassword) {
+        admin.password = hashPassword(newPassword);
+      }
+      writeFallback(data);
+      return true;
+    }
+    return false;
+  },
+
+  // Settings Methods
+  getSettings: async (): Promise<any> => {
+    if (usePostgres && pool) {
+      try {
+        const res = await pool.query('SELECT * FROM settings WHERE id = 1');
+        if (res.rows.length > 0) {
+          return {
+            heroImage: res.rows[0].hero_image,
+            aboutImage: res.rows[0].about_image
+          };
+        }
+      } catch (err) {
+        console.error('PG getSettings error:', err);
+      }
+    }
+    const data = readFallback();
+    return data.settings || {
+      heroImage: '/images/banner-principal.jpg',
+      aboutImage: '/images/sobre-nos.jpg'
+    };
+  },
+
+  updateSettings: async (settings: { heroImage: string; aboutImage: string }): Promise<boolean> => {
+    if (usePostgres && pool) {
+      try {
+        await pool.query(
+          'INSERT INTO settings (id, hero_image, about_image) VALUES (1, $1, $2) ON CONFLICT (id) DO UPDATE SET hero_image = $1, about_image = $2',
+          [settings.heroImage, settings.aboutImage]
+        );
+        return true;
+      } catch (err) {
+        console.error('PG updateSettings error:', err);
+      }
+    }
+    const data = readFallback();
+    data.settings = settings;
+    writeFallback(data);
+    return true;
   }
 };
