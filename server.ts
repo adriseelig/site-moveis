@@ -87,6 +87,24 @@ async function startServer() {
     }
   });
 
+  // API 1.5: Update Admin Credentials
+  app.post('/api/auth/update-credentials', authenticateAdmin, async (req, res) => {
+    const { username, password } = req.body;
+    if (!username) {
+      return res.status(400).json({ error: 'O nome de usuário é obrigatório.' });
+    }
+    try {
+      const success = await (db as any).updateAdminUser(username, password || undefined);
+      if (success) {
+        return res.json({ success: true, message: 'Credenciais de administrador alteradas com sucesso.' });
+      } else {
+        return res.status(404).json({ error: 'Administrador não encontrado.' });
+      }
+    } catch (e: any) {
+      return res.status(500).json({ error: e.message });
+    }
+  });
+
   // API 2: Image Upload Process
   app.post('/api/upload', authenticateAdmin, upload.single('file'), (req, res) => {
     if (!req.file) {
